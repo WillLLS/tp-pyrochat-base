@@ -1,7 +1,7 @@
 # 1. 
     Topology : Client / Server - Star topology
 # 2. 
-    Chaque log se localise sur le serveur et s'affiche dans le terminal.
+    Chaque log se localise sur le serveur et s'affiche dans le terminal. (Tout est en clair)
 # 3.
     Les log sont en clair.
     Le Debug est activé.
