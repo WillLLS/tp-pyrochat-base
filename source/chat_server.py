@@ -21,7 +21,7 @@ class ChatServer(object):
         self._log.debug(f"User list : {list(self._buffer)}")
 
     @expose
-    def send_message(self, user, message):
+    def send_message(self, user, message: str):
         self._log.info(f"{user} send message : {message}")
         for register_user in list(self._buffer):
             if user != register_user:

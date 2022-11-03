@@ -42,7 +42,7 @@ class ChatClient:
         with Proxy(self._uri) as server:
             server.register(self._name, self._callback)
 
-    def send_message(self, message:str)->None:
+    def send_message(self, message: str)->None:
         with Proxy(self._uri) as server:    
             server.send_message(self._name, message)
 
