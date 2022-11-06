@@ -11,3 +11,15 @@
     Chaque utilisateur possède 2 clefs : Public / Privée
         Alice chiffre un plaintext avec la clef public de Bob
         Bob reçoit le message chiffré et le déchiffre grâce à sa clef privée.
+
+# Chiffrement :
+# 1. 
+
+# 2. 
+
+# 3. 
+    Un serveur peut envoyer de faux messages.
+
+# 4
+    Il manque l'authentification
+
