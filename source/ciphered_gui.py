@@ -13,9 +13,10 @@ from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.fernet import Fernet, MultiFernet
+from hashlib import sha256
 
-
-DEFAULT_VALUES["password"]=""
+DEFAULT_VALUES["password"]="qaz"
 
 class CipheredGUI(BasicGUI):
     """
@@ -85,6 +86,7 @@ class CipheredGUI(BasicGUI):
         dpg.show_item("connection_windows")
 
     def encrypt(self, text):
+        """
         iv = os.urandom(16)
         cipher = Cipher(algorithms.AES(self._key), modes.CBC(iv))
         encryptor = cipher.encryptor()
@@ -95,8 +97,14 @@ class CipheredGUI(BasicGUI):
 
         ct = encryptor.update(padded_data) + encryptor.finalize()
         return ((iv, ct))
+        """
+        f = Fernet(self._key)
+        bin_text=bytes(text, "utf8")
+        token = f.encrypt(bin_text)
+        return(token)
 
-    def decrypt(self, message: tuple):
+    def decrypt(self, token: bytes):
+        """
         cipher = Cipher(algorithms.AES(self._key), modes.CBC(message[0]))
         decryptor = cipher.decryptor()
         padded_message=decryptor.update(message[1]) + decryptor.finalize()
@@ -104,6 +112,10 @@ class CipheredGUI(BasicGUI):
         unpadder = padding.PKCS7(128).unpadder()
         message_decr = unpadder.update(padded_message)+unpadder.finalize()
         return (message_decr)
+        """
+        f = Fernet(self._key)
+        message= f.decrypt(token)
+        return(str(message, "utf8"))
 
 
     def run_chat(self, sender, app_data)->None:
@@ -112,6 +124,7 @@ class CipheredGUI(BasicGUI):
         port = int(dpg.get_value("connection_port"))
         name = dpg.get_value("connection_name")
         password=dpg.get_value("connection_password")
+        """
         salt = b"ala"
         # derive
         kdf = PBKDF2HMAC(
@@ -120,8 +133,9 @@ class CipheredGUI(BasicGUI):
              salt=salt,
              iterations=100000,
              )
+        """
         password=bytes(password, "utf8")
-        self._key = kdf.derive(password)
+        self._key = base64.urlsafe_b64encode( sha256(password).digest())
 
 
         self._log.info(f"Connecting {name}@{host}:{port}")
@@ -147,12 +161,15 @@ class CipheredGUI(BasicGUI):
         
         if self._callback is not None:
             for user, message in self._callback.get():
+                """
                 print(message)
                 message_bytes_iv=serpent.tobytes(message[0])
                 #print(message_bytes_iv)
                 message_bytes_ct=serpent.tobytes(message[1])
                 #print(message_bytes_ct)
-                message_decr=self.decrypt((message_bytes_iv, message_bytes_ct))
+                """
+                message_bytes=serpent.tobytes(message)
+                message_decr=self.decrypt(message_bytes)
                 self.update_text_screen(f"{user} : {message_decr}")
                 print(message_decr)
             self._callback.clear()
