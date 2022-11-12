@@ -6,32 +6,51 @@ from hashlib import sha256
 
 class fernetGui(CipheredGUI):
 
+    """
+    Fonction d'initialisation : 
+        Nous ajoutons un membre _fernet
+    """
     def __init__(self) -> None:
         super().__init__()
-        self.f = None
+        self._fernet = None
 
+    """
+    Fonction démarrage du chat :
+        Récupération du mot de passe renseigné par l'utilisateur
+        Création d'un clef
+    """
     def run_chat(self, sender, app_data) -> None:
         super().run_chat(sender, app_data)
 
-        passwd = dpg.get_value("connection_password")
+        passwd = dpg.get_value("connection_password")   # Récupréation du mot de passe
 
-        m = sha256()
-        m.update(bytes(passwd, "utf8"))
-        key = m.digest()
-        self._key = b64encode(key)
-        self.f = Fernet(self._key)
+        m = sha256()                                    # Initialisation objet sha256
+        m.update(bytes(passwd, "utf8"))                 # Update de l'objet sha256 avec le mot de passe
+        key = m.digest()                                # Chiffrement SHA256 du mot de passe dans la variable key
+        self._key = b64encode(key)                      # Chiffrement en base64
+        self._fernet = Fernet(self._key)                # Initialisation de l'objet Fernet
     
+    """
+    Fonction de chiffrement :
+        Chiffrement basé sur l'objet Fernet
+    """
     def encrypt(self, plaintext):
-        cipher = self.f.encrypt(bytes(plaintext, "utf8"))
-        print("Cipher : ", cipher)
+        cipher = self._fernet.encrypt(bytes(plaintext, "utf8"))
         return (cipher)
 
+    """
+    Fonction de déchiffrement :
+        Après récéption des données, cette fonction décrypt le message.
+    """
     def decrypt(self, data):
-        print("Data :", data)
-        encrypted_data = b64decode(data)
-        plaintext = self.f.decrypt(encrypted_data)
+        encrypted_data = b64decode(data)                 # Déchiffrement en base64
+        plaintext = self._fernet.decrypt(encrypted_data) # Déchiffrement du message
         return str(plaintext, "utf8")
 
+    """
+    Fonction de réception du message :
+        Déchiffrement du message grâce à la fonction decrypt
+    """
     def recv(self) -> None:
         if self._callback is not None:
             for user, message in self._callback.get():
