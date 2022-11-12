@@ -57,6 +57,6 @@
     Oui (on peut également réduire le TTL pour augmenter l'efficacité)
 
 ## 4.
-    Certaines requête plus complexe (mais correct) peuvent se retrouver ignorées à cause du TTL, 
+    Certaines requête plus complexe (mais correctes) peuvent se retrouver ignorées à cause du TTL
     si le temps d'analyse de cette dernière est trop élevé.
 
