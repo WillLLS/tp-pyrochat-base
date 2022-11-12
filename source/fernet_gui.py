@@ -7,6 +7,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from hashlib import sha256
 import base64
 import dearpygui.dearpygui as dpg
+import serpent
 
 DEFAULT_VALUES = {
     "host" : "127.0.0.1",
@@ -33,20 +34,35 @@ class FernetGUI(CypheredGUI):
 
     def run_chat(self,sender,app_data)->None:
         super().run_chat(sender, app_data)
-        hashpass = sha256(bytes(dpg.get_value('connection_password'),"utf8"))
+        password = bytes(dpg.get_value('connection_password'),"utf8")
+        hashpass = sha256(password)
+        print(f"sha256 = {hashpass}")
         #self._key = base64.b64encode(hashpass)
-        self._key = base64.urlsafe_b64decode(hashpass)
+        #self._key = base64.urlsafe_b64decode(hashpass.hexdigest())
+        self._key = base64.b64encode(hashpass.digest())
+        print(f'self._key = {self._key}')
 
     def encrypt(self, message):
         message_bin = bytes(message,"utf8")
         f = Fernet(self._key)
         token = f.encrypt(message_bin)
+        print(f'token = {token}')
         return (token)
 
     def decrypt(self, token):
         f = Fernet(self._key)
         message_bin = f.decrypt(token)
         return str(message_bin,"utf8")
+
+
+    def recv(self)->None:
+        if self._callback is not None:
+            for user, message in self._callback.get():
+                msg = serpent.tobytes(message)
+                data = (msg)
+
+                self.update_text_screen(f"{user} : {self.decrypt(data)}")
+            self._callback.clear()
 
 
 if __name__ == "__main__":
