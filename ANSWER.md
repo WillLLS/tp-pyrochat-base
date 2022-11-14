@@ -14,7 +14,7 @@
 ## 4.
     L'utilisation d'un algorithme de chiffrement symétrique (tel que l'AES).
     Ces algorithmes de chiffrement se basent sur une même clé pour chiffrer et déchiffrer un message. 
-    Ainsi, pour communiquer, 2 utilisateurs devront donc se partager une clé de manière confidentielle(clé privé).
+    Ainsi, pour communiquer, 2 utilisateurs devront se partager une clé de manière confidentielle(clé privé).
 
 # Chiffrement
 
