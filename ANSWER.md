@@ -1,7 +1,8 @@
 # Prise en main
 
 ## 1. 
-    Il s'agit d'une topologie Client / Server en étoile. Dans cette topologie, tout les clients sont reliés au serveur (la communication entre 2 clients transite donc par le serveur).
+    Il s'agit d'une topologie Client / Server en étoile. Dans cette topologie, tout les clients sont reliés au serveur 
+   (la communication entre 2 clients transite donc par le serveur).
     
 ## 2. 
     Chaque log se localise sur le serveur et s'affiche dans le terminal.
@@ -13,7 +14,8 @@
     
 ## 4.
     L'utilisation d'un algorithme de chiffrement symétrique (tel que l'AES).
-    Ces algorithmes de chiffrement se basent sur une même clé pour chiffrer et déchiffrer un message. Ainsi, pour communiquer, 2 utilisateurs devront donc se partager une clé de manière confidentielle(clé privé).
+    Ces algorithmes de chiffrement se basent sur une même clé pour chiffrer et déchiffrer un message. 
+    Ainsi, pour communiquer, 2 utilisateurs devront donc se partager une clé de manière confidentielle(clé privé).
 
 # Chiffrement
 
@@ -21,7 +23,8 @@
     Non, car cette fonction est pseudo-aléatoire. Une fonction pseudo-aléatoire suit une séquence définit et peut donc être prédictible. 
 
 ## 2.
-    En cryptographie, il est nécessaire de connaitre parfaitement son code pour pouvoir détecter et combler l'ensemble des vulnérabilités. En utilisant ces primitives nous ne sommes pas sur à 100 % de tout ce que nous implémentons.
+    En cryptographie, il est nécessaire de connaitre parfaitement son code pour pouvoir détecter et 
+    combler l'ensemble des vulnérabilités. En utilisant ces primitives nous ne sommes pas sur à 100 % de tout ce que nous implémentons.
     
 ## 3.
     Un serveur malveillant peut envoyé de faux messages et surcharger le serveur. 
@@ -68,11 +71,16 @@
 
     Lors de la réalisation des différents codes, nous avons pu relever certaines vulnérabilités :
    
-    - La taille des messages reçu constitue une autre vulnérabilité. La librairie Fernet est idéale pour chiffrer des données qui tiennent facilement en mémoire mais est inadaptée pour les messages trop volumineux. En effet, Fernet ne permet pas de chiffrer les messages trop volumineux et d'afficher les données non authentifiées. Une personne souhaitant envoyer un message de taille trop importante risque donc de voir son message tronquer à la reception. 
+    - La taille des messages reçu constitue une autre vulnérabilité. La librairie Fernet est idéale pour chiffrer des données qui tiennent facilement 
+    en mémoire mais est inadaptée pour les messages trop volumineux. En effet, Fernet ne permet pas de chiffrer les messages trop volumineux et d'afficher 
+    les données non authentifiées. Une personne souhaitant envoyer un message de taille trop importante risque donc de voir son message tronquer à la reception. 
    
-    - De plus, la librairie Fernet génère un IV en utilisant la fonction urandom du module os. Comme évoqué dans les questions précédentes, cette fonction est pseudo-aléatoire et peut donc générer un IV prédictible. Pour combler cette faille, il faudrait générer des IV purement aléatoure en utilisant le bruit.
+    - De plus, la librairie Fernet génère un IV en utilisant la fonction urandom du module os. Comme évoqué dans les questions précédentes, 
+    cette fonction est pseudo-aléatoire et peut donc générer un IV prédictible. Pour combler cette faille, il faudrait générer des IV purement 
+    aléatoure en utilisant le bruit.
 
-    -Bien que les messages envoyés ne soient plus visibles depuis le serveur, le nom des destinataires des messages sont restés en clair. Il est donc possible de voir qui envoi le message et à qui le message est destiné.
+    -Bien que les messages envoyés ne soient plus visibles depuis le serveur, le nom des destinataires des messages sont restés en clair. 
+    Il est donc possible de voir qui envoi le message et à qui le message est destiné.
     
 
     
