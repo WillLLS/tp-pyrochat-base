@@ -47,7 +47,7 @@
     Il s'agit d'une attaque par dénis de service (DoS).
 
 ## 3.
-    L'utilisation d'une durée de vie au message permet de contrer cela. (TTL)
+    L'ajout d'une durée de vie au message permet de contrer cela. (TTL)
 
 # TTL
 
