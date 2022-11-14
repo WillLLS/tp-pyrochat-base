@@ -1,8 +1,7 @@
 # Prise en main
 
 ## 1. 
-    Il s'agit d'une topologie Client / Server en étoile. Dans cette topologie, tout les clients sont reliés au serveur 
-   (la communication entre 2 clients transite donc par le serveur).
+    Il s'agit d'une topologie Client / Server en étoile. Dans cette topologie, tout les clients sont reliés au serveur (la communication entre 2 clients transite donc par le serveur).
     
 ## 2. 
     Chaque log se localise sur le serveur et s'affiche dans le terminal.
